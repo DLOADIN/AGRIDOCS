@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proforma Invoice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="invoice-container">
+        <h1>PROFORMA INVOICE</h1>
+        <div class="section">
+            <div class="input-group">
+                <label for="seller">Seller:</label>
+                <input type="text" id="seller" name="seller">
+            </div>
+            <div class="input-group">
+                <label for="invoiceNo">Invoice Number:</label>
+                <input type="text" id="invoiceNo" name="invoiceNo" value="INV-00001">
+            </div>
+            <div class="input-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="2024-07-16">
+            </div>
+        </div>
+        <div class="section">
+            <div class="input-group">
+                <label for="buyer">Buyer:</label>
+                <input type="text" id="buyer" name="buyer">
+            </div>
+            <div class="input-group">
+                <label for="delivery">Delivery Site:</label>
+                <input type="text" id="delivery" name="delivery">
+            </div>
+        </div>
+        <div class="section">
+            <div class="input-group">
+                <label for="method">Method of Dispatch:</label>
+                <input type="text" id="method" name="method">
+            </div>
+            <div class="input-group">
+                <label for="type">Type of Dispatch:</label>
+                <input type="text" id="type" name="type">
+            </div>
+            <div class="input-group">
+                <label for="terms">Terms / Mode of Payment:</label>
+                <input type="text" id="terms" name="terms">
+            </div>
+        </div>
+        <div class="section">
+            <div class="input-group">
+                <label for="portLoading">Port of Loading:</label>
+                <input type="text" id="portLoading" name="portLoading">
+            </div>
+            <div class="input-group">
+                <label for="portDischarge">Port of Discharge:</label>
+                <input type="text" id="portDischarge" name="portDischarge">
+            </div>
+        </div>
+        <div class="section product-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Code</th>
+                        <th>Description of Goods</th>
+                        <th>Unit Quantity</th>
+                        <th>Unit Rate</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="productCode"></td>
+                        <td><input type="text" name="description"></td>
+                        <td><input type="number" name="quantity"></td>
+                        <td><input type="number" name="rate"></td>
+                        <td><input type="number" name="price"></td>
+                        <td><input type="number" name="amount"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="add-line">Add another line</button>
+            <button class="import-lines">Import lines</button>
+        </div>
+        <div class="section total-section">
+            <div class="input-group">
+                <label for="consignmentTotal">Consignment Total:</label>
+                <input type="number" id="consignmentTotal" name="consignmentTotal" readonly>
+            </div>
+            <div class="input-group">
+                <label for="additionalCosts">Additional Costs:</label>
+                <input type="number" id="additionalCosts" name="additionalCosts">
+            </div>
+            <div class="input-group">
+                <label for="tax">Add Tax:</label>
+                <input type="number" id="tax" name="tax">
+            </div>
+            <div class="input-group">
+                <label for="total">TOTAL:</label>
+                <input type="number" id="total" name="total" readonly>
+            </div>
+        </div>
+        <div class="section bank-details">
+            <h3>Bank Details</h3>
+            <div class="input-group">
+                <label for="bankName">Bank Name:</label>
+                <input type="text" id="bankName" name="bankName">
+            </div>
+            <div class="input-group">
+                <label for="accountNo">Account Number/IBAN:</label>
+                <input type="text" id="accountNo" name="accountNo">
+            </div>
+            <div class="input-group">
+                <label for="swift">SWIFT:</label>
+                <input type="text" id="swift" name="swift">
+            </div>
+            <div class="input-group">
+                <label for="currency">Currency:</label>
+                <input type="text" id="currency" name="currency">
+            </div>
+        </div>
+        <div class="section signature">
+            <button>Click here to sign</button>
+        </div>
+    </div>
+</body>
+</html>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+}
+
+.invoice-container {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #000;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+td input{
+    border-radius:10px;
+    height:4vh;
+    width:15.5vh;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    height:4vh;
+}
+
+.product-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.product-section th, .product-section td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.product-section th {
+    background-color: #f9f9f9;
+}
+
+.add-line, .import-lines {
+    padding: 10px;
+    margin-right: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.total-section, .bank-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.total-section .input-group, .bank-details .input-group {
+    flex: 1 1 45%;
+    margin-right: 10px;
+}
+
+.signature {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signature button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signature button:hover {
+    background-color: #0056b3;
+}
+</style>

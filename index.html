@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.0.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="./image/sm_5af437038c88f.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css" />
+    <title>AGRI DOCS</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
+    .content p,.list li{
+      font-family: "EB Garamond", serif;
+      font-optical-sizing: auto;
+      font-weight: 80px;
+      font-style: normal;
+      font-variation-settings:"wdth" 100;
+      font-size:22px;
+      width:40vh;
+      font-weight: 300;;
+      color:#ffff;
+    }
+
+    .nav__links li a{
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      font-style: italic;
+    }
+    
+    .nav__logo a{
+      font-family: "Roboto", sans-serif;
+      font-size: 25px;
+      font-style: none;
+      font-weight: 700;
+    }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav__logo"><a href="#">AGRI DOCS</a></div>
+      <ul class="nav__links">
+        <li class="link">
+          <a href="">HOME</a></li>
+        <li class="link" h>
+          <a href="loginadmin.php">USER</a></li>
+        <li class="link" >
+          <a  href="./user/loginuser.php">ADMIN</a></li>
+        <li class="link" >
+          <a  href="./user/loginlogistics.php">LOGISTICS</a></li>
+      </ul>
+      <div class="search__box">
+        <input type="text" placeholder="Search" />
+        <i class="ri-search-line"></i>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="container__left">
+        <div class="content">
+          <h1>Streamlined Documentation <br>Process</h1>
+          <p>
+            Integration with logistics systems enables a streamlined documentation process. 
+            For example:
+            <ul class="list">
+              <li>Automated generation of shipping manifests, bills of lading, and other documentation</li>
+              <li>Pre-populated templates tailored to different logistics providers and destination countries</li>
+              <li>Dynamic document generation based on real-time shipment data</li>
+            </ul>
+          </p>
+          <div class="btns">
+            <button class="read__more">Read More</button>
+            <button class="our__blogs">Our Blogs</button>
+          </div>
+          <div class="chevrons">
+            <span class="chev__left">
+              <i class="ri-arrow-left-s-line"></i>
+            </span>
+            <span class="chev__right">
+              <i class="ri-arrow-right-s-line"></i>
+            </span>
+          </div>
+        </div>
+
+
+        <div class="content" id="content">
+          <h1>Real-time Updates on <br> Shipment Status</h1>
+          <p>
+            AgriDocs provides real-time updates on shipment status. For instance:
+            <ul class="list">
+              <li>Live tracking of shipments at every stage of the transportation process</li>
+              <li>Instant notifications about changes or issues</li>
+              <li>Proactive management to address issues promptly and reduce delays</li>
+            </ul>
+          </p>
+          <div class="btns">
+            <button class="read__more">Read More</button>
+            <button class="our__blogs">Our Blogs</button>
+          </div>
+          <div class="chevrons">
+            <span class="chev__left">
+              <i class="ri-arrow-left-s-line"></i>
+            </span>
+            <span class="chev__right">
+              <i class="ri-arrow-right-s-line"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="bottom__tracker">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </body>
+</html>

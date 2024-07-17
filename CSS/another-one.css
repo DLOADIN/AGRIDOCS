@@ -1,0 +1,142 @@
+.formation-1{
+  display: grid;
+  grid-template-columns: 130px 500px 150px 300px;
+  row-gap: 30px;
+  column-gap: 30px;
+  
+  padding-top: 10vh;
+}
+.formation-1 input{
+  border-top: 1px solid #784F33;
+  border-radius: 6px;
+  height: 7vh;
+  padding: 15px;
+  width: 35vh;
+  font-style: italic;
+}
+.formation-2{
+  display: block;
+  row-gap: 30px;
+  column-gap: 30px;
+  padding-top: 10vh;
+  margin:0 auto;
+}
+.formation-2 input{
+  border-top: 1px solid #784F33;
+  border-radius: 6px;
+  height: 7vh;
+  padding: 15px;
+  width: 35vh;
+  font-style: italic;
+}
+
+textarea{
+  border-radius: 8px; 
+  border-top: 1px solid #784F33;
+  padding: 15px;
+}
+
+#button-btn{
+  margin-left: 150vh;
+  position: sticky;
+  padding: 10px 20px;
+}
+
+
+.main-content, #main-content{
+  height: fit-content;
+  width: 300vh;
+  
+}
+
+
+  .form-form{
+    background: #faf8f7;
+    opacity: 80%;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width:170vh;
+    height: fit-content;
+    padding-left: 10vh;
+    margin:0 auto;
+  }
+  .formation-1{
+    padding-left: 1rem;
+  }
+  i{
+    color:#faf8f7
+  }
+
+  .tabble-container{
+    justify-content:center;
+    display:flex;
+    align-items:center;
+    max-height:200vh;
+    width:fit-content;
+    border:1px solid #fff;
+    border-radius:15px;
+    background:#fff;
+  }
+
+  .tabble-wrapper{
+    margin:0 auto;
+  }
+
+
+  .la-form input{
+    width:35vh;
+    height:5vh;
+    border:1px solid black;
+    border-radius:5px;
+    padding:7px; 
+    gap:2;
+    line:5px;
+  }
+
+  .inputbex{
+    display:inline-block;
+    padding:3rem 0rem;
+  }
+
+  .la-form .ibex{
+    display:block;
+  }
+
+  .ibex input{
+    margin:0rem 3rem;
+    width:40vh;
+    height:7vh;
+    color:black;
+    padding-left:3vh;
+    font-style:italic;
+  }
+
+  .ibex input::placeholder {
+    color: black;
+  }
+
+  .tabble-wrapper h1{
+    font-size:40px;
+    font-weight:bolder;
+    text-align:center;
+    padding-bottom:2rem;
+  }
+  #ibex{
+    margin:2.5rem 0rem;
+  }
+
+@media screen and (max-width: 1500px) {
+  .form-form{
+    background: #faf8f7;
+    opacity: 80%;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 280vh;
+    height: fit-content;
+    padding-left: 10vh;
+  }
+
+i{
+  color:#faf8f7
+}
+}
