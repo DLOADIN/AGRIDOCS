@@ -1,33 +1,35 @@
 <?php
-  require "../connection.php";
+require "../connection.php";
 
-  if (!empty($_SESSION["id"])) {
+if (!empty($_SESSION["id"])) {
     $id = $_SESSION["id"];
-  } else {
+} else {
     header('location:loginlogistics.php');
     exit();
-  }
+}
 
-  // Handle action requests
-  if (isset($_GET['action']) && isset($_GET['table'])) {
+if (isset($_GET['action']) && isset($_GET['table']) && isset($_GET['id'])) {
     $action = mysqli_real_escape_string($con, $_GET['action']);
     $table = mysqli_real_escape_string($con, $_GET['table']);
+    $row_id = mysqli_real_escape_string($con, $_GET['id']);
 
     if (in_array($table, ['commercial', 'packaging', 'proforma', 'certificate']) && in_array($action, ['approve', 'disapprove'])) {
-      $status = $action === 'approve' ? 'APPROVED' : 'DISAPPROVED';
+        $status = $action === 'approve' ? 'APPROVED' : 'DISAPPROVED';
 
-      $query = "UPDATE `$table` SET status='$status' WHERE id='$id'";
-      if (mysqli_query($con, $query)) {
-        // Redirect to avoid reprocessing on refresh
-        header('Location: track-products.php');
-        exit();
-      } else {
-        echo "Error updating record: " . mysqli_error($con);
-      }
+        $query = $con->prepare("UPDATE `$table` SET status=? WHERE id=?");
+        $query->bind_param("si", $status, $row_id);
+
+        if ($query->execute()) {
+            // Redirect to avoid reprocessing on refresh
+            header('Location: track-products.php');
+            exit();
+        } else {
+            echo "Error updating record: " . $query->error;
+        }
     } else {
-      echo "Invalid action or table";
+        echo "Invalid action or table";
     }
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -163,56 +165,59 @@
 
     <div class="tablestotable">
       <div class="table-containment">
-        <?php
-          $sql = mysqli_query($con, "SELECT * FROM `commercial` WHERE id='$id' ");
-          $row = mysqli_fetch_array($sql);
-          $number = 0;
-        ?>
         <h1>DETAILS ON COMMERCIAL INVOICES</h1>
         <table>
           <tr>
             <th>#</th>
             <th>EXPORTER</th>
             <th>DATE</th>
-            <th>ULTIMATE CONSIGNEE</th>
-            <th>INTERMEDIATE CONSIGNEE</th>
-            <th>ORDER NUMBER</th>
-            <th>CUSTOMER NUMBER</th>
+            <th>ORIGIN STATE</th>
             <th>DESTINATION STATE</th>
-            <th>EMAIL</th>
+            <th>INTERMEDIATE CONSIGNEE</th>
+            <th>QUALITY</th>
+            <th>DESCRIPTION</th>
+            <th>TAX</th>
+            <th>BANK NAME</th>
             <th>STATUS</th>
+            <th>VIEW</th>
           </tr>
+          <?php
+          $sql = mysqli_query($con, "SELECT * FROM `commercial`");
+          $number = 0;
+          while($row = mysqli_fetch_array($sql)):
+        ?>
           <tr>
             <td><?php echo ++$number; ?></td>
             <td><?php echo htmlspecialchars($row['u_exporter']); ?></td>
             <td><?php echo htmlspecialchars($row['u_date']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_consignee']); ?></td>
+            <td><?php echo htmlspecialchars($row['u_originstate']); ?></td>
+            <td><?php echo htmlspecialchars($row['u_destinationstate']);?></td>
             <td><?php echo htmlspecialchars($row['u_intermediateconsignee']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_ordernumber']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_customernumber']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_destinationstate']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_destinationstate']); ?></td>
+            <td><?php echo htmlspecialchars($row['quality']); ?></td>
+            <td><?php echo htmlspecialchars($row['description']); ?></td>
+            <td><?php echo htmlspecialchars($row['tax_name']); ?></td>
+            <td><?php echo htmlspecialchars($row['bankName']); ?></td>
             <td class="td">
-              <?php if ($row['status'] === 'pending') { ?>
-                <a href="?id=<?php echo $id; ?>&action=approve&table=commercial" class="fg-eric1">APPROVE</a>
-                <a href="?id=<?php echo $id; ?>&action=disapprove&table=commercial" class="fg-eric2">DISAPPROVE</a>
-              <?php } else { ?>
-                <span><?php echo htmlspecialchars($row['status']); ?></span>
-              <?php } ?>
-            </td>
+                    <?php if (strtolower($row['status']) === 'pending') { ?>
+                        <a href="?id=<?php echo $row['id']; ?>&action=approve&table=commercial" class="fg-eric1">APPROVE</a>
+                        <a href="?id=<?php echo $row['id']; ?>&action=disapprove&table=commercial" class="fg-eric2">DISAPPROVE</a>
+                    <?php } else { ?>
+                        <span><?php echo htmlspecialchars($row['status']); ?></span>
+                    <?php } ?>
+                </td>
+            <td>
+                <a href="viewcommercial.php?id=<?php echo $row ['id']?>">VIEW INVOICE</a>
+              </td>
           </tr>
+          <?php
+          endwhile;
+          ?>
         </table>
       </div>
     </div>
 
     <div class="tablestotable">
       <div class="table-containment">
-        <?php
-          // Displaying the Packaging table
-          $sql = mysqli_query($con, "SELECT * FROM `packaging` WHERE id='$id' ");
-          $row = mysqli_fetch_array($sql);
-          $number = 0;
-        ?>
         <h1>DETAILS ON PACKAGING LISTS</h1>
         <table>
           <tr>
@@ -226,71 +231,90 @@
             <th>GROSS WEIGHT</th>
             <th>NET WEIGHT</th>
             <th>STATUS</th>
+            <th>VIEW</th>
           </tr>
+          <?php
+          $sqly = mysqli_query($con, "SELECT * FROM `packaging`");
+          $number = 0;
+        while ($row = mysqli_fetch_array($sqly)):
+        ?>
           <tr>
             <td><?php echo ++$number; ?></td>
-            <td><?php echo htmlspecialchars($row['u_exporter']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_date']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_customernumber']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_consignee']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_terms']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_exportcarrier']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_grossweight']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_netweight']); ?></td>
+            <td><?php echo $row['u_exporter']; ?></td>
+            <td><?php echo $row['u_date']; ?></td>
+            <td><?php echo $row['u_customernumber']; ?></td>
+            <td><?php echo $row['u_consignee']; ?></td>
+            <td><?php echo $row['u_terms']; ?></td>
+            <td><?php echo $row['u_exportcarrier']; ?></td>
+            <td><?php echo $row['Grossweight']; ?></td>
+            <td><?php echo $row['Netweight']; ?></td>
             <td class="td">
-              <?php if ($row['status'] === 'pending') { ?>
+              <?php if (strtolower($row['status']) == 'pending') { ?>
                 <a href="?id=<?php echo $id; ?>&action=approve&table=packaging" class="fg-eric1">APPROVE</a>
                 <a href="?id=<?php echo $id; ?>&action=disapprove&table=packaging" class="fg-eric2">DISAPPROVE</a>
               <?php } else { ?>
                 <span><?php echo htmlspecialchars($row['status']); ?></span>
               <?php } ?>
             </td>
+            <td>
+              <a href="viewpackaging.php?id=<?php echo $row ['id']?>">VIEW INVOICE</a>
+            </td>
           </tr>
+          <?php
+          endwhile;
+          ?>
         </table>
       </div>
     </div>
 
     <div class="tablestotable">
       <div class="table-containment">
-        <?php
-          // Displaying the Proforma table
-          $sql = mysqli_query($con, "SELECT * FROM `proforma` WHERE id='$id' ");
-          $row = mysqli_fetch_array($sql);
-          $number = 0;
-        ?>
         <h1>DETAILS ON PROFORMA INVOICES</h1>
         <table>
           <tr>
             <th>#</th>
-            <th>EXPORTER</th>
-            <th>DATE</th>
-            <th>ULTIMATE CONSIGNEE</th>
-            <th>INTERMEDIATE CONSIGNEE</th>
-            <th>ORDER NUMBER</th>
-            <th>CUSTOMER NUMBER</th>
-            <th>DESTINATION STATE</th>
+            <th>SELLER</th>
+            <th>INVOICE NUMBER</th>
+            <th>DATE OF REGISTRATION</th>
+            <th>PORT OF LOADING</th>
+            <th>PORT OF DISCHARGE</th>
+            <th>TAX</th>
+            <th>BANKNAME</th>
             <th>TOTAL</th>
             <th>STATUS</th>
+            <th>VIEW</th>
           </tr>
-          <tr>
-            <td><?php echo ++$number; ?></td>
-            <td><?php echo htmlspecialchars($row['u_exporter']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_date']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_consignee']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_intermediateconsignee']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_ordernumber']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_customernumber']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_destinationstate']); ?></td>
-            <td><?php echo htmlspecialchars($row['u_total']); ?></td>
-            <td class="td">
-              <?php if ($row['status'] === 'pending') { ?>
-                <a href="?id=<?php echo $id; ?>&action=approve&table=proforma" class="fg-eric1">APPROVE</a>
-                <a href="?id=<?php echo $id; ?>&action=disapprove&table=proforma" class="fg-eric2">DISAPPROVE</a>
-              <?php } else { ?>
-                <span><?php echo htmlspecialchars($row['status']); ?></span>
-              <?php } ?>
-            </td>
-          </tr>
+          <?php
+        // Displaying the Proforma table
+        $sql = mysqli_query($con, "SELECT * FROM `proforma`");
+        $number = 0;
+        while ($row = mysqli_fetch_array($sql)):
+        ?>
+            <tr>
+                <td><?php echo ++$number ?></td>
+                <td><?php echo $row['seller']?></td>
+                <td><?php echo $row['invoiceNo']?></td>
+                <td><?php echo $row['u_date']?></td>
+                <td><?php echo $row['portLoading']?></td>
+                <td><?php echo $row['portDischarge']?></td>
+                <td><?php echo $row['tax']?></td>
+                <td><?php echo $row['bankname']?></td>
+                <td><?php echo $row['u_total']?></td>
+                <td class="td">
+                <?php if (strtolower($row['status']) == 'pending') { ?>
+                        <a href="?id=<?php echo $row['id']; ?>&action=approve&table=proforma" class="fg-eric1">APPROVE</a>
+                        <a href="?id=<?php echo $row['id']; ?>&action=disapprove&table=proforma" class="fg-eric2">DISAPPROVE</a>
+                    <?php } else { ?>
+                        <span><?php echo htmlspecialchars($row['status']); ?></span>
+                    <?php } ?>
+                </td>
+                <td>
+                  <a href="viewproforma.php?id=<?php echo $row ['id']?>">VIEW INVOICE</a>
+              </td>
+            </tr>
+        <?php
+        endwhile;
+        ?>
         </table>
       </div>
     </div>
@@ -309,29 +333,33 @@
             <th>#</th>
             <th>IMPORTER</th>
             <th>EXPORTER</th>
-            <th>TARIFF CODE</th>
-            <th>DESCRIPTION OF GOODS</th>
+            <th>INVOCE NUMBER</th>
+            <th>DATEDESCRIPTION OF GOODS</th>
             <th>COUNTRY OF ORIGIN</th>
             <th>PRODUCTION DATE</th>
             <th>EXPIRATION DATE</th>
             <th>STATUS</th>
+            <th>VIEW</th>
           </tr>
           <tr>
             <td><?php echo ++$number;?></td>
             <td><?php echo htmlspecialchars($row['u_importer']);?></td>
             <td><?php echo htmlspecialchars($row['u_exporter']);?></td>
-            <td><?php echo htmlspecialchars($row['u_tariffcode']);?></td>
-            <td><?php echo htmlspecialchars($row['u_goods']);?></td>
+            <td><?php echo htmlspecialchars($row['invoiceNo']);?></td>
+            <td><?php echo htmlspecialchars($row['u_date']);?></td>
             <td><?php echo htmlspecialchars($row['u_country']);?></td>
             <td><?php echo htmlspecialchars($row['u_productiondate']);?></td>
             <td><?php echo htmlspecialchars($row['u_expirationdate']);?></td>
             <td class="td">
-              <?php if ($row['status'] === 'pending') { ?>
+            <?php if (strtolower($row['status']) == 'pending') { ?>
                 <a href="?id=<?php echo $id; ?>&action=approve&table=certificate" class="fg-eric1">APPROVE</a>
                 <a href="?id=<?php echo $id; ?>&action=disapprove&table=certificate" class="fg-eric2">DISAPPROVE</a>
               <?php } else { ?>
                 <span><?php echo htmlspecialchars($row['status']); ?></span>
               <?php } ?>
+            </td>
+            <td>
+              <a href="viewcertificate.php?id=<?php echo $row ['id']?>">VIEW INVOICE</a>
             </td>
           </tr>
         </table>
@@ -340,3 +368,16 @@
   </div>
 </body>
 </html>
+<style>
+  td a{
+    text-decoration:none;
+    color:black;
+  }
+  td a:hover{
+    color: #21A747;
+    transition:0.3s all ease;
+  }
+  td a:focus{
+    color: #21A747;
+  }
+</style>

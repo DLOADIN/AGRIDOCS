@@ -264,40 +264,40 @@
   <div class="tablestotable">
     <div class="table-containment">
     <?php
-        $sql=mysqli_query($con,"SELECT * FROM `proforma` WHERE id='$id' ");
-        $row=mysqli_fetch_array($sql);
+        $sql=mysqli_query($con,"SELECT * FROM `proforma`");
         $number=0;
         ?>
         <h1>DETAILS ON PROFORMA INVOICES</h1>
         <table>
         <tr>
           <th>#</th>
-          <th>EXPORTER</th>
-          <th>DATE</th>
-          <th>ULTIMATE CONSIGNEE</th>
-          <th>INTERMEDIATE CONSIGNEE</th>
-          <th>ORDER NUMBER</th>
-          <th>CUSTOMER NUMBER</th>
-          <th>DESTINATION STATE</th>
+          <th>SELLER</th>
+          <th>INVOICE NUMBER</th>
+          <th>DATE OF REGISTRATION</th>
+          <th>PORT OF LOADING</th>
+          <th>PORT OF DISCHARGE</th>
+          <th>TAX</th>
+          <th>BANKNAME</th>
           <th>TOTAL</th>
           <th>STATUS</th>
         </tr>
+        <?php while($row=mysqli_fetch_array($sql)): ?>
         <tr>
           <td><?php echo ++$number ?></td>
-          <td><?php echo $row['u_exporter']?></td>
+          <td><?php echo $row['seller']?></td>
+          <td><?php echo $row['invoiceNo']?></td>
           <td><?php echo $row['u_date']?></td>
-          <td><?php echo $row['u_consignee']?></td>
-          <td><?php echo $row['u_intermediateconsignee']?></td>
-          <td><?php echo $row['u_ordernumber']?></td>
-          <td><?php echo $row['u_customernumber']?></td>
-          <td><?php echo $row['u_destinationstate']?></td>
+          <td><?php echo $row['portLoading']?></td>
+          <td><?php echo $row['portDischarge']?></td>
+          <td><?php echo $row['tax']?></td>
+          <td><?php echo $row['bankname']?></td>
           <td><?php echo $row['u_total']?></td>
           <td><?php echo $row['status']?></td>
         </tr>
+        <?php endwhile; ?>
       </table>
     </div>
   </div>
-
 
   <div class="tablestotable">
     <div class="table-containment">

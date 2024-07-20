@@ -1,0 +1,128 @@
+
+.invoice-container {
+  width: 80%;
+  border: 2px solid #000;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius:20px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.invoice-container input{
+  padding:1rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap');
+
+.la-form input[name="u_exporter"],input[name="u_consignee"],input[name="u_intermediateconsignee"]{
+    font-family: "Noto Serif Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 80px;
+    font-style: normal;
+    font-variation-settings:"wdth" 100;
+    font-size:23px;
+    width:40vh;
+  }
+  input[name="foreignid"]{
+    display:none;
+  }
+  #button-btn{
+    position:relative;
+    padding:20px 50px;
+  } 
+.invoice-container input:hover{
+  border:1px solid #21A747;
+  transition:.3s ease;
+}
+
+.invoice-container input:focus{
+  border: 2px solid #21A747;
+  outline: none; /* Optional: Removes default focus outline */
+}
+td input{
+  border-radius:10px;
+  height:4vh;
+  width:15.5vh;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  height:4vh;
+}
+
+.product-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.product-section th, .product-section td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-section th {
+  background-color: #f9f9f9;
+}
+
+.add-line, .import-lines {
+  padding: 10px;
+  margin-right: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.total-section, .bank-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.total-section .input-group, .bank-details .input-group {
+  flex: 1 2 45%;
+  margin-right: 10px;
+}
+
+.signature {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signature button {
+  padding: 10px 20px;
+  background-color: #21A747;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signature button:hover {
+  background-color: white;
+  color:#21A747;
+}

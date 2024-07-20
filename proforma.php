@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./CSS/newfriend.css">
   <link rel="stylesheet" href="./CSS/another-one.css">
   <link rel="stylesheet" href="./CSS/charts.css">
+  <link rel="stylesheet" href="./CSS/invoice.css">
   <link rel="shortcut icon" href="./image/sm_5af437038c88f.jpg" type="image/x-icon">
   <script src="https://kit.fontawesome.com/14ff3ea278.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,7 +27,7 @@
 <body>
   <style>
     #main-contents{
-      height:200vh;
+      height:230vh;
     }
     .caradan-products{
       text-decoration: none;
@@ -151,21 +152,15 @@
         </div>       
   </div>
 
-  <div class="tabble-container">
-    <div class="tabble-wrapper">
+  
+    <!-- <div class="tabble-wrapper">
     <h1>PROFORMA INVOICE</h1>
       <div class="fire-table">
         <form action="" method="post" class="la-form">
-        <?php
-        $sql=mysqli_query($con,"SELECT id AS identification FROM `business` WHERE id='$id' ");
-        $row=mysqli_fetch_array($sql);
-        $gat=$row['identification']
-        ?>
-
           <div class="ibex">
-            <input type="text" name="foreignid" value="<?php echo $gat;?>">
+            <input type="text" name="foreignid">
             <input type="text" name="u_exporter" placeholder="EXPORTER">
-            <input type="text" name="u_date" value="<?php echo date('Y-m-d')?>">
+            <input type="text" name="u_date" placeholder="DATE">
             <input type="text" name="u_ponumber" placeholder="PO NUMBER">
           </div>
 
@@ -190,12 +185,134 @@
           </div>
           <div class="ibex" id="ibex">
           <input type="text" name="u_total" placeholder="TOTAL">
-          <button type="submit" name="submit" class="btn-3" id="button-btn">SAVE CHANGES</button>
           </div>  
+        </form> 
+      </div>-->
+    <div class="invoice-container">
+        <h1>PROFORMA INVOICE</h1>
+        <form action="" method="post">
+        <div class="section">
+            <div class="input-group">
+                <label for="seller">Seller:</label>
+                <input type="text" id="seller" name="seller">
+            </div>
+            <div class="input-group">
+                <label for="invoiceNo">Invoice Number:</label>
+                <input type="text" id="invoiceNo" name="invoiceNo" value="INV-00001">
+            </div>
+            <div class="input-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="u_date" value="<?php echo date('Y-m-d')?>">
+            </div>
+        </div>
+        <?php
+        $sql=mysqli_query($con,"SELECT id AS identification FROM `business` WHERE id='$id' ");
+        $row=mysqli_fetch_array($sql);
+        $gat=$row['identification']
+        ?>
+        <div class="section">
+            <div class="input-group">
+              <input type="text" name="foreignid" value="<?php echo $gat;?>">
+                <label for="buyer">Buyer:</label>
+                <input type="text" id="buyer" name="buyer">
+            </div>
+            <div class="input-group">
+                <label for="delivery">Delivery Site:</label>
+                <input type="text" id="delivery" name="delivery">
+            </div>
+        </div>
+        <div class="section">
+            <div class="input-group">
+                <label for="method">Method of Dispatch:</label>
+                <input type="text" id="method" name="method">
+            </div>
+            <div class="input-group">
+                <label for="type">Type of Dispatch:</label>
+                <input type="text" id="type" name="type">
+            </div>
+            <div class="input-group">
+                <label for="terms">Terms / Mode of Payment:</label>
+                <input type="text" id="terms" name="termss">
+            </div>
+        </div>
+        <div class="section">
+            <div class="input-group">
+                <label for="portLoading">Port of Loading:</label>
+                <input type="text" id="portLoading" name="portLoading">
+            </div>
+            <div class="input-group">
+                <label for="portDischarge">Port of Discharge:</label>
+                <input type="text" id="portDischarge" name="portDischarge">
+            </div>
+        </div>
+        <div class="section product-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Code</th>
+                        <th>Description of Goods</th>
+                        <th>Unit Quantity</th>
+                        <th>Unit Rate</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="productCode"></td>
+                        <td><input type="text" name="description"></td>
+                        <td><input type="text" name="quantity"></td>
+                        <td><input type="text" name="rate"></td>
+                        <td><input type="text" name="price"></td>
+                        <td><input type="text" name="amount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section total-section">
+            <div class="input-group">
+                <label for="additionalCosts">Additional Costs:</label>
+                <input type="number" id="additionalCosts" name="additionalCosts">
+            </div>
+            <div class="input-group">
+                <label for="tax">Add Tax:</label>
+                <input type="number" id="tax" name="tax">
+            </div>
+        </div>
+        <div class="section bank-details">
+            <h3>Bank Details</h3>
+            <div class="input-group">
+                <label for="bankName">Bank Name:</label>
+                <input type="text" id="bankName" name="bankName">
+            </div>
+            <div class="input-group">
+                <label for="accountNo">Account Number/IBAN:</label>
+                <input type="text" id="accountNo" name="accountNo">
+            </div>
+            <div class="input-group">
+                <label for="swift">SWIFT:</label>
+                <input type="text" id="swift" name="swift">
+            </div>
+            <div class="input-group">
+                <label for="currency">Currency:</label>
+                <input type="text" id="currency" name="currency">
+            </div>
+            <div class="input-group">
+                <label for="currency">Total:</label>
+                <input type="number" id="currency" name="u_total">
+            </div>
+            <input type="text" name="status" value="Pending">
+            <style>
+              input[value="Pending"]{
+                display:none;
+              }
+              </style>
+              <div class="section signature">
+          <button type="submit" name="submit" class="btn-3">SAVE CHANGES</button>
+        </div>
+        </div>
         </form>
-      </div>
     </div>
-  </div>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
@@ -219,24 +336,43 @@
   input[name="foreignid"]{
     display:none;
   }
+  .btn-3:hover{
+    transition:.7s ease;
+    transform:scale(1.1);
+  }
+  .invoice-container{
+    margin:0 auto;
+  }
 </style>
 <?php
   if(isset($_POST['submit'])){
     $foreignid = $_POST['foreignid'];
-    $u_exporter = $_POST['u_exporter'];
-    $u_date = $_POST['u_date'];
-    $u_ponumber = $_POST['u_ponumber'];
-    $u_consignee = $_POST['u_consignee'];
-    $u_ordernumber = $_POST['u_ordernumber'];
-    $u_exportcarrier = $_POST['u_exportcarrier'];
-    $u_customernumber = $_POST['u_customernumber'];
-    $u_intermediateconsignee = $_POST['u_intermediateconsignee'];
-    $u_carrierexporter = $_POST['u_carrierexporter'];
-    $u_originstate = $_POST['u_originstate'];
-    $u_destinationstate = $_POST['u_destinationstate'];
-    $u_total= $_POST['u_total'];
+    $seller=$_POST['seller'];
+    $invoiceNo = $_POST['invoiceNo'];
+    $date = $_POST['u_date'];
+    $buyer = $_POST['buyer'];
+    $delivery = $_POST['delivery'];
+    $portLoading = $_POST['portLoading'];
+    $portDischarge = $_POST['portDischarge'];
+    $productCode = $_POST['productCode'];
+    $description = $_POST['description'];
+    $quantity = $_POST['quantity'];
+    $rate = $_POST['rate'];
+    $price = $_POST['price'];
+    $amount = $_POST['amount'];
+    $additionalCosts = $_POST['additionalCosts'];
+    $tax = $_POST['tax'];
+    $bankName = $_POST['bankName'];
+    $accountNo = $_POST['accountNo'];
+    $swift = $_POST['swift'];
+    $currency = $_POST['currency'];
+    $method = $_POST['method'];
+    $type = $_POST['type'];
+    $terms = $_POST['termss'];
+    $total = $_POST['u_total'];
     $status = $_POST['status'];
-    $sql=mysqli_query($con,"INSERT INTO `proforma` VALUES('','$foreignid','$u_exporter','$u_date','$u_ponumber','$u_consignee','$u_ordernumber','$u_exportcarrier','$u_customernumber','$u_intermediateconsignee','$u_carrierexporter','$u_originstate','$u_destinationstate', '$u_total','$status')");
+
+    $sql = mysqli_query($con, "INSERT INTO `proforma` VALUES('','$foreignid','$seller','$invoiceNo','$date','$buyer','$delivery','$terms','$portLoading','$portDischarge','$productCode','$description','$quantity','$rate','$price','$amount','$additionalCosts','$tax','$bankName','$accountNo','$swift','$currency','$method','$type','$terms','$total','$status')");
     
     if($sql){
       echo "<script>alert('Registered Successfully')</script>";

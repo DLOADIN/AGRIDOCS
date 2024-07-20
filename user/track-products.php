@@ -93,7 +93,7 @@
                   ?>
                   <div class="fibrosis">
                       <h4>Shipment ID: <span>SHIP129<?php echo $number++; ?></span></h4>
-                      <h4>Destination: <span><?php echo $row['u_destinationstate']; ?></span></h4>
+                      <h4>Destination: <span><?php echo $row['portDischarge']; ?></span></h4>
                       <h4>In transit: <span class="in-transit"><i class="fa-solid fa-truck-fast"></i>In transit</span></h4>
                       <h4>ETA: <span><?php echo $row['u_date']; ?></span></h4>
                   </div>
